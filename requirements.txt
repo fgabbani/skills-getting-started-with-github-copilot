@@ -3,3 +3,4 @@ uvicorn
 httpx
 watchfiles
 pytest>=8.0
+python-jose[cryptography]

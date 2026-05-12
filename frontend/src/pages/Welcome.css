@@ -1,0 +1,66 @@
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 1.2rem;
+  color: #424242;
+}
+
+.header {
+  background: #1976d2;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+  font-weight: 500;
+  font-size: 1.3rem;
+}
+
+.header button {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Roboto", sans-serif;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.header button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  padding: 48px 16px;
+}
+
+.greeting-card {
+  background: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+}
+
+.greeting-card h2 {
+  color: #1976d2;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.greeting-card p {
+  color: #424242;
+  font-size: 1rem;
+}

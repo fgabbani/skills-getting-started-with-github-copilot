@@ -5,14 +5,46 @@ A super simple FastAPI application that allows students to view and sign up
 for extracurricular activities at Mergington High School.
 """
 
-from fastapi import FastAPI, HTTPException
-from fastapi.staticfiles import StaticFiles
+from datetime import datetime, timedelta
+
+from fastapi import Depends, FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi.staticfiles import StaticFiles
+from jose import JWTError, jwt
+from pydantic import BaseModel
 import os
 from pathlib import Path
 
+SECRET_KEY = "mergington-secret-key-for-dev"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
 app = FastAPI(title="Mergington High School API",
               description="API for viewing and signing up for extracurricular activities")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+security = HTTPBearer()
+
+users_db = {
+    "michael@mergington.edu": {"password": "password123", "name": "Michael"},
+    "emma@mergington.edu": {"password": "password123", "name": "Emma"},
+    "john@mergington.edu": {"password": "password123", "name": "John"},
+}
+
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
 
 # Mount the static files directory
 current_dir = Path(__file__).parent
@@ -76,6 +108,32 @@ activities = {
         "participants": ["ava@mergington.edu", "ethan@mergington.edu"]
     }
 }
+
+
+@app.post("/login")
+def login(req: LoginRequest):
+    """Authenticate a user and return a JWT token."""
+    user = users_db.get(req.email)
+    if not user or user["password"] != req.password:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+    expire = datetime.now(tz=None) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    token_data = {"sub": req.email, "name": user["name"], "exp": expire}
+    token = jwt.encode(token_data, SECRET_KEY, algorithm=ALGORITHM)
+    return {"access_token": token, "token_type": "bearer"}
+
+
+@app.get("/me")
+def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """Return the current user's info from a valid JWT token."""
+    try:
+        payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
+        email: str = payload.get("sub")
+        name: str = payload.get("name")
+        if email is None:
+            raise HTTPException(status_code=401, detail="Invalid token")
+        return {"email": email, "name": name}
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
 
 
 @app.get("/")

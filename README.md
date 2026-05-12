@@ -1,37 +1,46 @@
-<div align="center">
+# Mergington High School Management System
 
-# 🎉 Congratulations fgabbani! 🎉
+A web application for viewing and signing up for extracurricular activities at Mergington High School.
 
-<img src="https://octodex.github.com/images/welcometocat.png" height="200px" />
+## Architecture
 
-### 🌟 You've successfully completed the exercise! 🌟
+- **Backend:** FastAPI (Python) — REST API with JWT authentication
+- **Frontend:** React — Single-page application with login and activity management
 
-## 🚀 Share Your Success!
+## Backend Setup
 
-**Show off your new skills and inspire others!**
+```bash
+pip install -r requirements.txt
+uvicorn src.app:app --reload
+```
 
-<a href="https://twitter.com/intent/tweet?text=I%20just%20completed%20the%20%22Getting%20Started%20with%20GitHub%20Copilot%22%20GitHub%20Skills%20hands-on%20exercise!%20%F0%9F%8E%89%0A%0Ahttps%3A%2F%2Fgithub.com%2Ffgabbani%2Fskills-getting-started-with-github-copilot%0A%0A%23GitHubSkills%20%23OpenSource%20%23GitHubLearn" target="_blank" rel="noopener noreferrer">
-  <img src="https://img.shields.io/badge/Share%20on%20X-1da1f2?style=for-the-badge&logo=x&logoColor=white" alt="Share on X" />
-</a>
-<a href="https://bsky.app/intent/compose?text=I%20just%20completed%20the%20%22Getting%20Started%20with%20GitHub%20Copilot%22%20GitHub%20Skills%20hands-on%20exercise!%20%F0%9F%8E%89%0A%0Ahttps%3A%2F%2Fgithub.com%2Ffgabbani%2Fskills-getting-started-with-github-copilot%0A%0A%23GitHubSkills%20%23OpenSource%20%23GitHubLearn" target="_blank" rel="noopener noreferrer">
-  <img src="https://img.shields.io/badge/Share%20on%20Bluesky-0085ff?style=for-the-badge&logo=bluesky&logoColor=white" alt="Share on Bluesky" />
-</a>
-<a href="https://www.linkedin.com/feed/?shareActive=true&text=I%20just%20completed%20the%20%22Getting%20Started%20with%20GitHub%20Copilot%22%20GitHub%20Skills%20hands-on%20exercise!%20%F0%9F%8E%89%0A%0Ahttps%3A%2F%2Fgithub.com%2Ffgabbani%2Fskills-getting-started-with-github-copilot%0A%0A%23GitHubSkills%20%23OpenSource%20%23GitHubLearn" target="_blank" rel="noopener noreferrer">
-  <img src="https://img.shields.io/badge/Share%20on%20LinkedIn-0077b5?style=for-the-badge&logo=linkedin&logoColor=white" alt="Share on LinkedIn" />
-</a>
+The API runs on `http://localhost:8000`.
 
-### 🎯 What's Next?
+## Frontend Setup
 
-**Keep the momentum going!**
+```bash
+cd frontend
+npm install
+npm start
+```
 
-[![](https://img.shields.io/badge/Return%20to%20Exercise-%E2%86%92-1f883d?style=for-the-badge&logo=github&labelColor=197935)](https://github.com/fgabbani/skills-getting-started-with-github-copilot/issues/1)
-[![GitHub Skills](https://img.shields.io/badge/Explore%20GitHub%20Skills-000000?style=for-the-badge&logo=github&logoColor=white)](https://learn.github.com/skills)
+The frontend runs on `http://localhost:3000` and proxies API calls to the backend.
 
-*There's no better way to learn than building things!* 🚀
+## Available Users
 
-</div>
+| Email                      | Password      |
+|----------------------------|---------------|
+| michael@mergington.edu     | password123   |
+| emma@mergington.edu        | password123   |
+| john@mergington.edu        | password123   |
 
----
+## API Endpoints
 
-&copy; 2025 GitHub &bull; [Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/code_of_conduct.md) &bull; [MIT License](https://gh.io/mit)
+| Method | Path                                      | Description                  |
+|--------|-------------------------------------------|------------------------------|
+| POST   | `/login`                                  | Authenticate and get JWT     |
+| GET    | `/me`                                     | Get current user info        |
+| GET    | `/activities`                             | List all activities          |
+| POST   | `/activities/{name}/signup?email=...`     | Sign up for an activity      |
+| DELETE | `/activities/{name}/participants?email=...`| Unregister from an activity  |
 
