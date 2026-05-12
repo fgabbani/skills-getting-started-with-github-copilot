@@ -10,7 +10,7 @@ python = "^3.11"
 fastapi = "^0.115.0"
 uvicorn = { version = "^0.34.0", extras = ["standard"] }
 python-jose = { version = "^3.3.0", extras = ["cryptography"] }
-python-multipart = "^0.0.20"
+python-multipart = "^0.0.27"
 
 [build-system]
 requires = ["poetry-core"]
